@@ -1,6 +1,6 @@
 import '@picocss/pico/css/pico.min.css'
 import './App.css'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 const loremIpsum = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
 diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
@@ -57,6 +57,26 @@ export default function App() {
       document.removeEventListener('selectionchange', handleSeletionChange)
     }
   })
+
+  useLayoutEffect(() => {
+    const textarea = document.getElementById('textarea')
+    if (!textarea) return
+
+    const selection = window.getSelection()
+    if (!selection) return
+
+    // Find the text node inside the #textarea
+    const textNode = textarea.firstChild
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return
+
+    // Set the selection range to the current caret position
+    const range = document.createRange()
+    range.setStart(textNode, caret)
+    range.setEnd(textNode, caret)
+
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }, [caret])
 
   return (
     <main className="content">
