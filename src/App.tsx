@@ -40,7 +40,12 @@ export default function App() {
   return (
     <main className="content">
       <h1>Textarea</h1>
-      <p id="textarea" contentEditable="true" suppressContentEditableWarning>
+      <p
+        id="textarea"
+        contentEditable="true"
+        suppressContentEditableWarning
+        spellCheck={false}
+      >
         {text}
       </p>
       <h1>State</h1>
