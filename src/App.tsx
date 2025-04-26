@@ -1,6 +1,6 @@
 import '@picocss/pico/css/pico.min.css'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 const loremIpsum = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
 diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
@@ -13,6 +13,27 @@ vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren`
 export default function App() {
   const [text, setText] = useState(loremIpsum.replace(/\n/g, ' '))
   const [caret, setCaret] = useState(0)
+
+  const handleBeforeInput = (event: FormEvent<HTMLParagraphElement>) => {
+    if (!hasData(event.nativeEvent)) return
+
+    const { data } = event.nativeEvent
+
+    if (typeof data !== 'string') return
+    if (data.length === 0) return
+
+    console.log('data', data)
+
+    setText((prev) => {
+      const start = prev.slice(0, caret)
+      const end = prev.slice(caret)
+
+      return `${start}${data}${end}`
+    })
+    setCaret((prev) => prev + data.length)
+
+    event.preventDefault()
+  }
 
   useEffect(() => {
     function handleSeletionChange() {
@@ -45,6 +66,7 @@ export default function App() {
         contentEditable="true"
         suppressContentEditableWarning
         spellCheck={false}
+        onBeforeInput={handleBeforeInput}
       >
         {text}
       </p>
@@ -52,4 +74,8 @@ export default function App() {
       <pre>{JSON.stringify({ caret, text })}</pre>
     </main>
   )
+}
+
+function hasData(event: Event): event is InputEvent {
+  return 'data' in event
 }
