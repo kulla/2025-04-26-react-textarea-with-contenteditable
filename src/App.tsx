@@ -1,6 +1,6 @@
 import '@picocss/pico/css/pico.min.css'
 import './App.css'
-import { FormEvent, useEffect, useLayoutEffect, useState } from 'react'
+import { type FormEvent, useEffect, useLayoutEffect, useState } from 'react'
 
 const loremIpsum = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
 diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
