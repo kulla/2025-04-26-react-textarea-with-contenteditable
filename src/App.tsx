@@ -91,7 +91,11 @@ export default function App() {
         {text}
       </p>
       <h1>State</h1>
-      <pre>{JSON.stringify({ caret, text })}</pre>
+      <p style={{ fontFamily: 'monospace' }}>
+        <strong>Caret:</strong> {caret}
+        <br />
+        <strong>Text:</strong> {text}
+      </p>
     </main>
   )
 }
