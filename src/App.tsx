@@ -22,8 +22,6 @@ export default function App() {
     if (typeof data !== 'string') return
     if (data.length === 0) return
 
-    console.log('data', data)
-
     setText((prev) => {
       const start = prev.slice(0, caret)
       const end = prev.slice(caret)
